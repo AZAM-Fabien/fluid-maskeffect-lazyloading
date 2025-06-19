@@ -56,14 +56,35 @@ const BackgroundContent = () => {
     );
 };
 
+import { useState } from 'react';
+
 const Example4Mask = () => {
+    const [isFluidMaskReady, setIsFluidMaskReady] = useState(false);
     return (
         <>
+            {/* Black overlay while FluidMask is loading */}
+            {!isFluidMaskReady && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    background: 'black',
+                    zIndex: 9999,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'white',
+                    fontSize: '2rem',
+                }}>
+                    Loading...
+                </div>
+            )}
             <BackgroundContent />
             <ThreeTunnel.In>
-                <Text />
                 <EffectComposer>
-                    <FluidMask />
+                    <FluidMask onReady={() => setIsFluidMaskReady(true)} loadingDelay={1000} />
                 </EffectComposer>
             </ThreeTunnel.In>
         </>

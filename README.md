@@ -2,7 +2,7 @@
 
 ![screen capture](./src/assets/screen_capture.png)
 
-Modification of @whatisjery/react-fluid-distortion to add a mask mode.
+Modification of @whatisjery/react-fluid-distortion to add a mask mode and lazy loading.
 
 Implementing post-processing fluid distortion effects in response to cursor interactions for React-Three-Fiber.
 Based on the shaders developed by [Pavel Dobryakov](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation)
@@ -75,6 +75,63 @@ const config = useConfig();
 | `densitionDissipation` | number      | `0.95`        | Reduces the fluid density over time. Valid range: `0.00` to `1.00`.                            |
 | `pressure`             | number      | `0.80`        | Controls the reduction of pressure. Valid range: `0.00` to `1.00`.                             |
 | `rainbow`              | boolean     | `true`        | Activates color mode based on mouse direction. No range applicable as this is a boolean value. |
+
+## Handling Loading State (onReady & loadingDelay)
+
+Both `Fluid` and `FluidMask` components accept two useful props for managing loading states:
+
+- **onReady**: a callback function called when the effect is fully initialized (i.e. textures, shaders, FBOs, etc. are ready).
+- **loadingDelay**: a minimum delay (in milliseconds) before `onReady` is called, even if everything is technically ready before.
+
+This is useful if you want to display a loading screen or overlay until the effect is ready.
+
+### Example: Show a black overlay while loading
+
+```jsx
+import { useState } from 'react';
+import { Fluid, FluidMask } from '@azam-fabien/fluid-dirstion-maskeffect';
+import { EffectComposer } from '@react-three/postprocessing';
+import { Canvas } from '@react-three/fiber';
+
+export default function App() {
+  const [isReady, setIsReady] = useState(false);
+
+  return (
+    <>
+      {!isReady && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'black',
+          zIndex: 9999,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          color: 'white',
+          fontSize: '2rem',
+        }}>
+          Loading...
+        </div>
+      )}
+      <Canvas style={{ width: '100vw', height: '100vh' }}>
+        <EffectComposer>
+          {/* For Fluid: */}
+          {/* <Fluid onReady={() => setIsReady(true)} loadingDelay={1000} /> */}
+
+          {/* For FluidMask: */}
+          <FluidMask onReady={() => setIsReady(true)} loadingDelay={1000} />
+        </EffectComposer>
+      </Canvas>
+    </>
+  );
+}
+```
+
+- `onReady` will be called once everything is initialized and after the `loadingDelay` (if provided).
+- You can use this to hide a loading overlay, enable UI, etc.
 
 ## Using FluidMask for Transparent Fluid Effects
 

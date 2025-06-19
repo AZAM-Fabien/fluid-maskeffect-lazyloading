@@ -27,6 +27,8 @@ type Uniforms = {
     uDissipation: number;
 };
 
+import { useEffect, useState } from 'react';
+
 export const FluidMask = ({
     blend = OPTSMASK.blend,
     force = OPTSMASK.force,
@@ -44,7 +46,9 @@ export const FluidMask = ({
     velocityDissipation = OPTSMASK.velocityDissipation,
     blendFunction = BlendFunction.NORMAL,
     maskMode = true,
-}: Props & { maskMode?: boolean }) => {
+    onReady,
+    loadingDelay = 0,
+}: Props & { maskMode?: boolean; onReady?: () => void; loadingDelay?: number }) => {
     const size = useThree((three) => three.size);
     const gl = useThree((three) => three.gl);
 
@@ -57,6 +61,40 @@ export const FluidMask = ({
     const FBOs = useFBOs();
     const materials = useMaterials();
     const { onPointerMove, splatStack } = usePointer({ force });
+
+    // new state to track initialization
+    const [isInitialized, setIsInitialized] = useState(false);
+    // To ensure that onReady is called only once
+    const [readyCalled, setReadyCalled] = useState(false);
+
+    // Effect to detect if everything is ready
+    useEffect(() => {
+        // Consider everything ready if FBOs, materials, refs are defined
+        const allReady =
+            meshRef.current &&
+            postRef.current &&
+            FBOs &&
+            materials &&
+            Object.keys(FBOs).length > 0 &&
+            Object.keys(materials).length > 0;
+        if (allReady && !isInitialized) {
+            setIsInitialized(true);
+        }
+    }, [FBOs, materials, meshRef.current, postRef.current, isInitialized]);
+
+    // Effect to call onReady after the minimum delay
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout | null = null;
+        if (isInitialized && !readyCalled) {
+            timeoutId = setTimeout(() => {
+                if (onReady) onReady();
+                setReadyCalled(true);
+            }, loadingDelay);
+        }
+        return () => {
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, [isInitialized, loadingDelay, onReady, readyCalled]);
 
     const setShaderMaterial = useCallback(
         (name: keyof ReturnType<typeof useMaterials>) => {

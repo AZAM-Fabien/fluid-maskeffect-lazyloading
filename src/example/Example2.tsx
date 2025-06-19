@@ -7,6 +7,7 @@ import { Fluid, useConfig } from '../../lib';
 import { ThreeTunnel } from './tunel';
 
 import Text from './Text';
+import React from 'react';
 
 const Torus = () => {
     const meshRef = useRef<Mesh>(null);

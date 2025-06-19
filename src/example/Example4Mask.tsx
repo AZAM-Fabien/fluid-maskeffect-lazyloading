@@ -2,6 +2,7 @@ import { EffectComposer } from '@react-three/postprocessing';
 import { FluidMask } from '../../lib/FluidMask';
 import { ThreeTunnel } from './tunel';
 import Text from './Text';
+import React from 'react';
 
 const BackgroundContent = () => {
     return (

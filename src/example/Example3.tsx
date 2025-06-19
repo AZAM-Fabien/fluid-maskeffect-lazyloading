@@ -6,6 +6,7 @@ import { ThreeTunnel } from './tunel';
 import img from '@/assets/img2.jpg';
 
 import Text from './Text';
+import React from 'react';
 
 const Image = () => {
     const texture = useTexture(img);

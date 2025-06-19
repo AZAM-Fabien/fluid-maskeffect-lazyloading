@@ -1,8 +1,8 @@
-[![Version](https://img.shields.io/npm/v/@whatisjery/react-fluid-distortion?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/@whatisjery/react-fluid-distortion)
-
 # Fluid Distortion for React Three Fiber
 
 ![screen capture](./src/assets/screen_capture.png)
+
+Modification of @whatisjery/react-fluid-distortion to add a mask mode.
 
 Implementing post-processing fluid distortion effects in response to cursor interactions for React-Three-Fiber.
 Based on the shaders developed by [Pavel Dobryakov](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation)
@@ -16,14 +16,10 @@ From the [react-three-fiber](https://github.com/pmndrs/react-three-fiber) docume
 
 ---
 
-## Try it :
-
-[codesandbox](https://codesandbox.io/p/github/whatisjery/react-fluid-distortion/draft/empty-leaf)
-
 ## Installation :
 
 ```bash
-npm install @whatisjery/react-fluid-distortion @react-three/drei @react-three/postprocessing postprocessing leva
+npm install @azam-fabien/fluid-dirstion-maskeffect @react-three/drei @react-three/postprocessing postprocessing leva
 ```
 
 ## Example of use :

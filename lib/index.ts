@@ -3,4 +3,5 @@
 export type { Props } from './types';
 
 export { Fluid } from './Fluid';
+export { FluidMask } from './FluidMask';
 export { useConfig } from './hooks/useConfig';

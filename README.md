@@ -25,7 +25,7 @@ npm install @azam-fabien/fluid-dirstion-maskeffect @react-three/drei @react-thre
 ## Example of use :
 
 ```jsx
-import { Fluid } from '@whatisjery/react-fluid-distortion';
+import { Fluid } from '@azam-fabien/fluid-dirstion-maskeffect';
 import { EffectComposer } from '@react-three/postprocessing';
 import { Canvas } from '@react-three/fiber';
 
@@ -81,7 +81,7 @@ const config = useConfig();
 The `FluidMask` component creates a special effect where the fluid acts as a transparent "hole" in the background, revealing content underneath. This is particularly useful when you want to have a semi-transparent overlay with fluid-shaped cutouts.
 
 ```jsx
-import { FluidMask } from '@whatisjery/react-fluid-distortion/lib/FluidMask';
+import { FluidMask } from '@azam-fabien/fluid-dirstion-maskeffect';
 import { EffectComposer } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
 

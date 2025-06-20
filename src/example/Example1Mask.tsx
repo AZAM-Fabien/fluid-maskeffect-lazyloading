@@ -1,7 +1,6 @@
 import { EffectComposer } from '@react-three/postprocessing';
 import { FluidMask } from '../../lib/FluidMask';
 import { ThreeTunnel } from './tunel';
-import Text from './Text';
 import React from 'react';
 
 const BackgroundContent = () => {
@@ -58,7 +57,7 @@ const BackgroundContent = () => {
 
 import { useState } from 'react';
 
-const Example4Mask = () => {
+const Example1Mask = () => {
     const [isFluidMaskReady, setIsFluidMaskReady] = useState(false);
     return (
         <>
@@ -84,11 +83,11 @@ const Example4Mask = () => {
             <BackgroundContent />
             <ThreeTunnel.In>
                 <EffectComposer>
-                    <FluidMask onReady={() => setIsFluidMaskReady(true)} loadingDelay={1000} />
+                    <FluidMask onReady={() => setIsFluidMaskReady(true)} loadingDelay={1000}/>
                 </EffectComposer>
             </ThreeTunnel.In>
         </>
     );
 };
 
-export default Example4Mask;
+export default Example1Mask;

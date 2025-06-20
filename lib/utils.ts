@@ -1,5 +1,5 @@
 import { Color, Vector3, Vector4 } from 'three';
-import { OPTS } from './constant';
+import { OPTSMASK } from './constantMask';
 
 export const hexToRgb = (hex: string) => {
     const color = new Color(hex);
@@ -8,7 +8,7 @@ export const hexToRgb = (hex: string) => {
 };
 
 export const normalizeScreenHz = (value: number, dt: number) => {
-    return Math.pow(value, dt * OPTS.refreshRate);
+    return Math.pow(value, dt * OPTSMASK.refreshRate);
 };
 
 export const parseColor = (colorString: string) => {

@@ -6,20 +6,17 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Layout from './example/Layout';
-import Example1 from './example/Example1';
-import Example2 from './example/Example2';
-import Example3 from './example/Example3';
-import Example4Mask from './example/Example4Mask';
+import Example1Mask from './example/Example1Mask';
+import Example2NoMask from './example/Example2NoMask';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
         children: [
-            { path: '/', element: <Example1 /> },
-            { path: '/example2', element: <Example2 /> },
-            { path: '/example3', element: <Example3 /> },
-            { path: '/example4Mask', element: <Example4Mask /> },
+            { path: '/', element: <Example1Mask /> },
+            { path: '/example1MAsk', element: <Example1Mask /> },
+            { path: '/example2NoMask', element: <Example2NoMask /> },
         ],
     },
 ]);

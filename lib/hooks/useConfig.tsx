@@ -1,12 +1,12 @@
 import { useControls, button } from 'leva';
-import { OPTS } from '../constant';
+import { OPTSMASK } from '../constantMask';
 
 export const useConfig = () => {
     const handleReset = () => {
         return set(
             Object.fromEntries(
                 Object.keys(params).map((key) => {
-                    return [key, OPTS[key as keyof typeof OPTS]];
+                    return [key, OPTSMASK[key as keyof typeof OPTSMASK]];
                 }),
             ),
         );
@@ -14,7 +14,7 @@ export const useConfig = () => {
 
     const [params, set] = useControls('Settings', () => ({
         intensity: {
-            value: OPTS.intensity,
+            value: OPTSMASK.intensity,
             min: 0.0,
             max: 10,
             step: 0.01,
@@ -22,7 +22,7 @@ export const useConfig = () => {
         },
 
         force: {
-            value: OPTS.force,
+            value: OPTSMASK.force,
             min: 0,
             max: 20,
             step: 0.1,
@@ -30,7 +30,7 @@ export const useConfig = () => {
         },
 
         distortion: {
-            value: OPTS.distortion,
+            value: OPTSMASK.distortion,
             min: 0,
             max: 2,
             step: 0.01,
@@ -38,7 +38,7 @@ export const useConfig = () => {
         },
 
         curl: {
-            value: OPTS.curl,
+            value: OPTSMASK.curl,
             min: 0,
             max: 50,
             step: 0.1,
@@ -46,7 +46,7 @@ export const useConfig = () => {
         },
 
         swirl: {
-            value: OPTS.swirl,
+            value: OPTSMASK.swirl,
             min: 0,
             max: 20,
             step: 1,
@@ -54,17 +54,17 @@ export const useConfig = () => {
         },
 
         fluidColor: {
-            value: OPTS.fluidColor,
+            value: OPTSMASK.fluidColor,
             label: 'fluid color',
         },
 
         backgroundColor: {
-            value: OPTS.backgroundColor,
+            value: OPTSMASK.backgroundColor,
             label: 'background color',
         },
 
         blend: {
-            value: OPTS.blend,
+            value: OPTSMASK.blend,
             min: 0.0,
             max: 10,
             step: 0.01,
@@ -72,17 +72,17 @@ export const useConfig = () => {
         },
 
         showBackground: {
-            value: OPTS.showBackground,
+            value: OPTSMASK.showBackground,
             label: 'show background',
         },
 
         rainbow: {
-            value: OPTS.rainbow,
+            value: OPTSMASK.rainbow,
             label: 'rainbow mode',
         },
 
         pressure: {
-            value: OPTS.pressure,
+            value: OPTSMASK.pressure,
             min: 0,
             max: 1,
             step: 0.01,
@@ -90,7 +90,7 @@ export const useConfig = () => {
         },
 
         densityDissipation: {
-            value: OPTS.densityDissipation,
+            value: OPTSMASK.densityDissipation,
             min: 0,
             max: 1,
             step: 0.01,
@@ -98,7 +98,7 @@ export const useConfig = () => {
         },
 
         velocityDissipation: {
-            value: OPTS.velocityDissipation,
+            value: OPTSMASK.velocityDissipation,
             min: 0,
             max: 1,
             step: 0.01,
@@ -106,7 +106,7 @@ export const useConfig = () => {
         },
 
         radius: {
-            value: OPTS.radius,
+            value: OPTSMASK.radius,
             min: 0.01,
             max: 1,
             step: 0.01,

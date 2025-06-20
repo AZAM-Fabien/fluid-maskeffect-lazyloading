@@ -1,6 +1,7 @@
 import { Canvas as R3fCanvas } from '@react-three/fiber';
 import { ThreeTunnel } from './tunel';
 import { Suspense } from 'react';
+import React from 'react';
 
 const Canvas = () => {
     return (

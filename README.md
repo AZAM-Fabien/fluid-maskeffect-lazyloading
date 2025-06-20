@@ -2,7 +2,7 @@
 
 ![screen capture](./src/assets/screen_capture.png)
 
-Modification of @whatisjery/react-fluid-distortion to add a mask mode and lazy loading.
+Modification of[Jérémie Nallet](https://github.com/whatisjery/react-fluid-distortion) to add a mask mode and lazy loading.
 
 Implementing post-processing fluid distortion effects in response to cursor interactions for React-Three-Fiber.
 Based on the shaders developed by [Pavel Dobryakov](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation)
@@ -22,10 +22,12 @@ From the [react-three-fiber](https://github.com/pmndrs/react-three-fiber) docume
 npm install @azam-fabien/fluid-dirstion-maskeffect @react-three/drei @react-three/postprocessing postprocessing leva
 ```
 
+> **Note:** The `Fluid` component has been removed. Only `FluidMask` is available in this package. If you were using `Fluid`, please migrate to `FluidMask` and adapt your code accordingly. maskMode is set to true by default,put false if you want to use it as a distortion effect set backgroundColor and fluidColor to a color without opacity.
+
 ## Example of use :
 
 ```jsx
-import { Fluid } from '@azam-fabien/fluid-dirstion-maskeffect';
+import { FluidMask } from '@azam-fabien/fluid-dirstion-maskeffect';
 import { EffectComposer } from '@react-three/postprocessing';
 import { Canvas } from '@react-three/fiber';
 
@@ -39,8 +41,8 @@ import { Canvas } from '@react-three/fiber';
         background: '#000000',
     }}>
     <EffectComposer>
-        <Fluid />
-        {... other effets}
+        <FluidMask />
+        {/* ... other effects ... */}
     </EffectComposer>
 </Canvas>;
 ```
@@ -54,34 +56,36 @@ const config = useConfig();
 
 ...
 
-<Fluid {...config} />
+<FluidMask {...config} />
 ```
 
 ## Options :
 
-| Name                   | Type        | Default Value | Description                                                                                    |
-| ---------------------- | ----------- | ------------- | ---------------------------------------------------------------------------------------------- |
-| `fluidColor`           | hexadecimal | `#005eff`     | Sets the fluid color. Effective only when `rainbow` is set to `false`.                         |
-| `backgroundColor`      | string      | `#070410`     | Sets the background color. Effective only when `showBackground` is `true`.                     |
-| `showBackground`       | boolean     | `false`       | Toggles the background color's visibility. If `false` it becomes transprent.                   |
-| `blend`                | number      | `5`           | Blends fluid into the scene when `showBackground` is true. Valid range: `0.00` to `10.0`.      |
-| `intensity`            | number      | `10`          | Sets the fluid intensity. Valid range: `0` to `10`.                                            |
-| `force`                | number      | `2`           | Multiplies the mouse velocity to increase fluid splatter. Valid range: `0.0` to `20`.          |
-| `distortion`           | number      | `2`           | Sets the distortion amount. Valid range: `0.00` to `2.00`.                                     |
-| `radius`               | number      | `0.3`         | Sets the fluid radius. Valid range: `0.01` to `1.00`.                                          |
-| `curl`                 | number      | `10`          | Sets the amount of the curl effect. Valid range: `0.0` to `50`.                                |
-| `swirl`                | number      | `20`          | Sets the amount of the swirling effect. Valid range: `0` to `20`.                              |
-| `velocityDissipation`  | number      | `0.99`        | Reduces the fluid velocity over time. Valid range: `0.00` to `1.00`.                           |
-| `densitionDissipation` | number      | `0.95`        | Reduces the fluid density over time. Valid range: `0.00` to `1.00`.                            |
-| `pressure`             | number      | `0.80`        | Controls the reduction of pressure. Valid range: `0.00` to `1.00`.                             |
-| `rainbow`              | boolean     | `true`        | Activates color mode based on mouse direction. No range applicable as this is a boolean value. |
+| Name                   | Type        | Default Value         | Description                                                                                    |
+| ---------------------- | ----------- | --------------------- | ---------------------------------------------------------------------------------------------- |
+| `fluidColor`           | hexadecimal | `#005eff`             | Sets the fluid color. Effective only when `rainbow` is set to `false`.                         |
+| `backgroundColor`      | string      | `#070410`             | Sets the background color. Effective only when `showBackground` is `true`.                     |
+| `showBackground`       | boolean     | `false`               | Toggles the background color's visibility. If `false` it becomes transprent.                   |
+| `blend`                | number      | `5`                   | Blends fluid into the scene when `showBackground` is true. Valid range: `0.00` to `10.0`.      |
+| `intensity`            | number      | `10`                  | Sets the fluid intensity. Valid range: `0` to `10`.                                            |
+| `force`                | number      | `2`                   | Multiplies the mouse velocity to increase fluid splatter. Valid range: `0.0` to `20`.          |
+| `distortion`           | number      | `2`                   | Sets the distortion amount. Valid range: `0.00` to `2.00`.                                     |
+| `radius`               | number      | `0.3`                 | Sets the fluid radius. Valid range: `0.01` to `1.00`.                                          |
+| `curl`                 | number      | `10`                  | Sets the amount of the curl effect. Valid range: `0.0` to `50`.                                |
+| `swirl`                | number      | `20`                  | Sets the amount of the swirling effect. Valid range: `0` to `20`.                              |
+| `velocityDissipation`  | number      | `0.99`                | Reduces the fluid velocity over time. Valid range: `0.00` to `1.00`.                           |
+| `densitionDissipation` | number      | `0.95`                | Reduces the fluid density over time. Valid range: `0.00` to `1.00`.                            |
+| `pressure`             | number      | `0.80`                | Controls the reduction of pressure. Valid range: `0.00` to `1.00`.                             |
+| `rainbow`              | boolean     | `true`                | Activates color mode based on mouse direction. No range applicable as this is a boolean value. |
+| `maskMode`             | boolean     | `true`                | Makes fluid act as a transparency mask when set to true                                        |
+| `backgroundColor`      | string      | `rgba(0, 0, 0, 0.86)` | Only accepts rgba color for opacity settings                                                   |
 
 ## Handling Loading State (onReady & loadingDelay)
 
-Both `Fluid` and `FluidMask` components accept two useful props for managing loading states:
+The `FluidMask` component accepts two useful props for managing loading states:
 
-- **onReady**: a callback function called when the effect is fully initialized (i.e. textures, shaders, FBOs, etc. are ready).
-- **loadingDelay**: a minimum delay (in milliseconds) before `onReady` is called, even if everything is technically ready before.
+-   **onReady**: a callback function called when the effect is fully initialized (i.e. textures, shaders, FBOs, etc. are ready).
+-   **loadingDelay**: a minimum delay (in milliseconds) before `onReady` is called, even if everything is technically ready before.
 
 This is useful if you want to display a loading screen or overlay until the effect is ready.
 
@@ -89,49 +93,46 @@ This is useful if you want to display a loading screen or overlay until the effe
 
 ```jsx
 import { useState } from 'react';
-import { Fluid, FluidMask } from '@azam-fabien/fluid-dirstion-maskeffect';
+import { FluidMask } from '@azam-fabien/fluid-dirstion-maskeffect';
 import { EffectComposer } from '@react-three/postprocessing';
 import { Canvas } from '@react-three/fiber';
 
 export default function App() {
-  const [isReady, setIsReady] = useState(false);
+    const [isReady, setIsReady] = useState(false);
 
-  return (
-    <>
-      {!isReady && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          background: 'black',
-          zIndex: 9999,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          fontSize: '2rem',
-        }}>
-          Loading...
-        </div>
-      )}
-      <Canvas style={{ width: '100vw', height: '100vh' }}>
-        <EffectComposer>
-          {/* For Fluid: */}
-          {/* <Fluid onReady={() => setIsReady(true)} loadingDelay={1000} /> */}
-
-          {/* For FluidMask: */}
-          <FluidMask onReady={() => setIsReady(true)} loadingDelay={1000} />
-        </EffectComposer>
-      </Canvas>
-    </>
-  );
+    return (
+        <>
+            {!isReady && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'black',
+                        zIndex: 9999,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        color: 'white',
+                        fontSize: '2rem',
+                    }}>
+                    Loading...
+                </div>
+            )}
+            <Canvas style={{ width: '100vw', height: '100vh' }}>
+                <EffectComposer>
+                    <FluidMask onReady={() => setIsReady(true)} loadingDelay={1000} />
+                </EffectComposer>
+            </Canvas>
+        </>
+    );
 }
 ```
 
-- `onReady` will be called once everything is initialized and after the `loadingDelay` (if provided).
-- You can use this to hide a loading overlay, enable UI, etc.
+-   `onReady` will be called once everything is initialized and after the `loadingDelay` (if provided).
+-   You can use this to hide a loading overlay, enable UI, etc.
 
 ## Using FluidMask for Transparent Fluid Effects
 
@@ -140,7 +141,6 @@ The `FluidMask` component creates a special effect where the fluid acts as a tra
 ```jsx
 import { FluidMask } from '@azam-fabien/fluid-dirstion-maskeffect';
 import { EffectComposer } from '@react-three/postprocessing';
-import { BlendFunction } from 'postprocessing';
 
 // First, create your background HTML content
 <div style={{
@@ -162,13 +162,6 @@ import { BlendFunction } from 'postprocessing';
 </Canvas>
 ```
 
-### Additional maskMode Option
-
-| Name              | Type    | Default Value         | Description                                             |
-| ----------------- | ------- | --------------------- | ------------------------------------------------------- |
-| `maskMode`        | boolean | `true`                | Makes fluid act as a transparency mask when set to true |
-| `backgroundColor` | string  | `rgba(0, 0, 0, 0.86)` | only accept rgba color for opacity settings             |
-
 ## Usage with nextjs
 
 If you're working with an older version of Next.js, you may get this type of error:
@@ -181,7 +174,7 @@ To fix it, you can enable package transpilation in your next.config file. Here�
 
 ```javascript
 const nextConfig = {
-    transpilePackages: ['@whatisjery/react-fluid-distortion'],
+    transpilePackages: ['@azam-fabien/fluid-dirstion-maskeffect'],
 };
 
 module.exports = nextConfig;

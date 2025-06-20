@@ -1,20 +1,17 @@
 import { Link, Outlet } from 'react-router-dom';
 import Canvas from './Canvas';
-import Github from '@/assets/github-mark-white.svg';
+import React from 'react';
 
 const Layout = () => {
     return (
         <>
             <div className='layout'>
-                <a target='_blank' href='https://github.com/whatisjery/post-fluid-distortion'>
-                    <img className='icon' src={Github} alt='icon' />
+                <a target='_blank' href='https://github.com/AZAM-Fabien/fluid-effect-maskeffect-lazyloading'>
                 </a>
 
-                <nav className='nav'>
+                <nav className='nav' style={{ display: 'flex', gap: '1rem', justifyContent: 'center', color: 'white', background: 'black'}}>
                     <Link to='/'>example 1</Link>
-                    <Link to='/example2'>example 2</Link>
-                    <Link to='/example3'>example 3</Link>
-                    <Link to='/example4Mask'>example 4</Link>
+                    <Link to='/example2NoMask'>example 2</Link>
                 </nav>
             </div>
 

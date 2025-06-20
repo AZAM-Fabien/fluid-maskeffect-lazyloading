@@ -16,7 +16,7 @@ export const useConfig = () => {
         intensity: {
             value: OPTSMASK.intensity,
             min: 0.0,
-            max: 10,
+            max: 100,
             step: 0.01,
             label: 'intensity',
         },

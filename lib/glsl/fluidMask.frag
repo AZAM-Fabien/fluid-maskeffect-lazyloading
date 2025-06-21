@@ -8,23 +8,20 @@ uniform float uIntensity;
 uniform float uRainbow;
 uniform float uBlend;
 uniform float uShowBackground;
-uniform float uMaskMode;
+uniform bool uMaskMode;
 
 void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
-    // Sample the fluid texture
+
     vec3 fluidColor = texture2D(tFluid, uv).rgb;
+
+    vec2 distortedUv = uv - fluidColor.rg * uDistort * 0.001;
     
-    // Calculate distortion if needed
-    vec2 distortedUv = uv - fluidColor.rg * uDistort;
-    
-    // Sample the input buffer at the potentially distorted UV
     vec4 texture = texture2D(inputBuffer, distortedUv);
     
-    // Calculate fluid intensity based on the length of the color vector
-    float intensity = length(fluidColor) * uIntensity;
+    float intensity = length(fluidColor) * uIntensity * 0.0001;
     
     // If mask mode is active, use the fluid as a transparency mask
-    if (uMaskMode > 0.5) {
+    if (uMaskMode) {
         // Start with the background color at full opacity
         vec4 backgroundColor = vec4(uBackgroundColor.rgb, uBackgroundColor.a);
         
@@ -48,7 +45,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
         return;
     }
 
-    vec4 computedFluidColor = mix(texture, colorForFluidEffect, uBlend);
+    vec4 computedFluidColor = mix(texture, colorForFluidEffect, uBlend * 0.01);
 
     vec4 finalColor;
 

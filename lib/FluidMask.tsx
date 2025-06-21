@@ -216,11 +216,11 @@ export const FluidMask = ({
 
             <FluidMaskEffect
                 blendFunction={blendFunction}
-                intensity={intensity * 0.0001}
+                intensity={intensity}
                 rainbow={rainbow}
-                distortion={distortion * 0.001}
+                distortion={distortion}
                 backgroundColor={backgroundColor}
-                blend={blend * 0.01}
+                blend={blend}
                 fluidColor={fluidColor}
                 showBackground={showBackground}
                 maskMode={maskMode}

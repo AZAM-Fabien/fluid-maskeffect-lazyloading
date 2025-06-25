@@ -19,7 +19,7 @@ From the [react-three-fiber](https://github.com/pmndrs/react-three-fiber) docume
 ## Installation :
 
 ```bash
-npm install @azam-fabien/fluid-maskeffect @react-three/drei @react-three/postprocessing postprocessing leva
+npm install fluid-maskeffect @react-three/drei @react-three/postprocessing postprocessing leva
 ```
 
 > **Note:** The `Fluid` component has been removed. Only `FluidMask` is available in this package. If you were using `Fluid`, please migrate to `FluidMask` and adapt your code accordingly. maskMode is set to true by default,put false if you want to use it as a distortion effect set backgroundColor and fluidColor to a color without opacity.

@@ -48,7 +48,8 @@ export const FluidMask = ({
     maskMode = true,
     onReady,
     loadingDelay = 0,
-}: Props & { maskMode?: boolean; onReady?: () => void; loadingDelay?: number }) => {
+    pointerEventsEnabled = true,
+}: Props & { maskMode?: boolean; onReady?: () => void; loadingDelay?: number; pointerEventsEnabled?: boolean }) => {
     const size = useThree((three) => three.size);
     const gl = useThree((three) => three.gl);
 
@@ -60,12 +61,29 @@ export const FluidMask = ({
 
     const FBOs = useFBOs();
     const materials = useMaterials();
-    const { onPointerMove, splatStack } = usePointer({ force });
+    const { onPointerMove, splatStack } = usePointer({ force, enablePointerEvents: pointerEventsEnabled });
 
     // new state to track initialization
     const [isInitialized, setIsInitialized] = useState(false);
     // To ensure that onReady is called only once
     const [readyCalled, setReadyCalled] = useState(false);
+    
+    // Effet pour gérer les pointer-events sur le canvas
+    useEffect(() => {
+        // Sélectionner le canvas Three.js
+        const canvas = document.querySelector('canvas');
+        if (canvas) {
+            // Appliquer pointer-events: none si pointerEventsEnabled est false
+            canvas.style.pointerEvents = pointerEventsEnabled ? 'auto' : 'none';
+        }
+        
+        return () => {
+            // Réinitialiser à l'état par défaut lors du démontage
+            if (canvas) {
+                canvas.style.pointerEvents = 'auto';
+            }
+        };
+    }, [pointerEventsEnabled]);
 
     // Effect to detect if everything is ready
     useEffect(() => {
@@ -207,7 +225,7 @@ export const FluidMask = ({
             {createPortal(
                 <mesh
                     ref={meshRef}
-                    onPointerMove={onPointerMove}
+                    onPointerMove={pointerEventsEnabled ? onPointerMove : undefined}
                     scale={[size.width, size.height, 1]}>
                     <planeGeometry args={[2, 2, 10, 10]} />
                 </mesh>,

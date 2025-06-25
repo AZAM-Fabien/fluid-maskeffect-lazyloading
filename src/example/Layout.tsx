@@ -5,7 +5,7 @@ import React from 'react';
 const Layout = () => {
     return (
         <>
-            <div className='layout'>
+            <div style={{ zIndex: 9999 }} className='layout'>
                 <a target='_blank' href='https://github.com/AZAM-Fabien/fluid-effect-maskeffect-lazyloading'>
                 </a>
 

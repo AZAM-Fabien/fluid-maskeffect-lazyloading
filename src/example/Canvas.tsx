@@ -12,6 +12,8 @@ const Canvas = () => {
                 left: 0,
                 height: '100vh',
                 width: '100vw',
+                pointerEvents: 'none',
+                zIndex: 50,
             }}>
             <Suspense fallback={null}>
                 <ThreeTunnel.Out />

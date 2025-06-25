@@ -18,11 +18,6 @@ const BackgroundContent = () => {
                 zIndex: -1,
                 overflow: 'auto',
             }}>
-            <img
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                src='src/assets/screen_capture.png'
-                alt='background'
-            />
             <h1 style={{ fontSize: '42px', marginBottom: '20px', fontWeight: 'bold' }}>
                 Fluid Mask Effect
             </h1>
@@ -59,6 +54,9 @@ import { useState } from 'react';
 
 const Example1Mask = () => {
     const [isFluidMaskReady, setIsFluidMaskReady] = useState(false);
+    const click = () => {
+        console.log('click');
+    };
     return (
         <>
             {/* Black overlay while FluidMask is loading */}
@@ -81,9 +79,10 @@ const Example1Mask = () => {
                 </div>
             )}
             <BackgroundContent />
+            <button onClick={click} style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>Click me</button>
             <ThreeTunnel.In>
                 <EffectComposer>
-                    <FluidMask onReady={() => setIsFluidMaskReady(true)} loadingDelay={1000}/>
+                    <FluidMask onReady={() => setIsFluidMaskReady(true)} loadingDelay={1000} pointerEventsEnabled={false}/>
                 </EffectComposer>
             </ThreeTunnel.In>
         </>

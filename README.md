@@ -78,6 +78,7 @@ const config = useConfig();
 | `pressure`             | number      | `0.84`                   | Controls the reduction of pressure. Valid range: `0.00` to `1.00`.                             |
 | `rainbow`              | boolean     | `false`                  | Activates color mode based on mouse direction. No range applicable as this is a boolean value. |
 | `maskMode`             | boolean     | `true`                   | Makes fluid act as a transparency mask when set to true                                        |
+| `pointerEventsEnabled` | boolean     | `true`                   | false make so that you can click on button under the canvas ( pointer-events: none )           |
 
 ## Handling Loading State (onReady & loadingDelay)
 

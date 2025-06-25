@@ -1,9 +1,9 @@
 {
-    "name": "@azam-fabien/fluid-dirstion-maskeffect",
-    "description": "A react-three-fiber component for creating fluid distortion effects and maskeffect",
+    "name": "@azam-fabien/fluid-maskeffect",
+    "description": "A react-three-fiber component for fluid distortion effects and fluid mask effect",
     "author": "azam-fabien",
     "private": false,
-    "version": "1.1.0",
+    "version": "1.0.0",
     "type": "module",
     "main": "dist/index.umd.js",
     "module": "dist/index.es.js",
@@ -78,11 +78,11 @@
         "glsl"
     ],
     "bugs": {
-        "url": "https://github.com/AZAM-Fabien/fluid/issues"
+        "url": "https://github.com/AZAM-Fabien/fluid-maskeffect-lazyloading/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/AZAM-Fabien/fluid"
+        "url": "git+https://github.com/AZAM-Fabien/fluid-maskeffect-lazyloading"
     },
-    "homepage": "https://github.com/AZAM-Fabien/fluid#readme"
+    "homepage": "https://github.com/AZAM-Fabien/fluid-maskeffect-lazyloading#readme"
 }

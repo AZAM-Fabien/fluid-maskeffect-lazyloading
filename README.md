@@ -9,6 +9,12 @@ Based on the shaders developed by [Pavel Dobryakov](https://github.com/PavelDoGr
 
 ---
 
+## Test :
+
+test on https://fluid-mask-effect-vercel-example.vercel.app/ 
+
+---
+
 From the [react-three-fiber](https://github.com/pmndrs/react-three-fiber) documentation :
 
 > [!WARNING]  

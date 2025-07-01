@@ -7,6 +7,7 @@ Modification of [Jérémie Nallet](https://github.com/whatisjery/react-fluid-dis
 Implementing post-processing fluid distortion effects in response to cursor interactions for React-Three-Fiber.
 Based on the shaders developed by [Pavel Dobryakov](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation)
 
+Work on computer not yet on mobile. 
 ---
 
 ## Test :

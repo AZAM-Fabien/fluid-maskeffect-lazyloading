@@ -17,6 +17,7 @@ const BackgroundContent = () => {
                 color: '#333',
                 zIndex: -1,
                 overflow: 'auto',
+                backgroundColor: 'rgb(255, 224, 199)',
             }}>
             <h1 style={{ fontSize: '42px', marginBottom: '20px', fontWeight: 'bold' }}>
                 Fluid Mask Effect

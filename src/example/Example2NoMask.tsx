@@ -6,6 +6,7 @@ import img from '../assets/img.jpg';
 import Text from './Text';
 import { useTexture } from '@react-three/drei';
 import React from 'react';
+import { useConfig } from '../../lib/hooks/useConfig';
 
 
 const BackgroundContent = () => {
@@ -22,6 +23,7 @@ const BackgroundContent = () => {
                 color: '#333',
                 zIndex: -1,
                 overflow: 'auto',
+                
             }}>
             <h1 style={{ fontSize: '42px', marginBottom: '20px', fontWeight: 'bold' }}>
                 Fluid Mask Effect
@@ -67,6 +69,7 @@ const Image = () => {
 };
 
 const Example5 = () => {
+    const config = useConfig();
 
     return (
         <>
@@ -76,7 +79,7 @@ const Example5 = () => {
                 <Image />
                 <Text />
                 <EffectComposer>
-                    <FluidMask maskMode={false} fluidColor='white' radius={0.1} distortion={2} blend={5} backgroundColor='black'/>
+                    <FluidMask {...config} maskMode={false} fluidColor='white' radius={0.1} distortion={2} blend={5} backgroundColor='black'/>
                 </EffectComposer>
             </ThreeTunnel.In>
         </>

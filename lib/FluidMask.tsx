@@ -61,33 +61,25 @@ export const FluidMask = ({
 
     const FBOs = useFBOs();
     const materials = useMaterials();
-    const { onPointerMove, splatStack } = usePointer({ force, enablePointerEvents: pointerEventsEnabled });
+    const { onPointerDown, onPointerMove, onPointerUp, splatStack } = usePointer({ force, enablePointerEvents: pointerEventsEnabled });
 
-    // new state to track initialization
     const [isInitialized, setIsInitialized] = useState(false);
-    // To ensure that onReady is called only once
     const [readyCalled, setReadyCalled] = useState(false);
     
-    // Effet pour gérer les pointer-events sur le canvas
     useEffect(() => {
-        // Sélectionner le canvas Three.js
         const canvas = document.querySelector('canvas');
         if (canvas) {
-            // Appliquer pointer-events: none si pointerEventsEnabled est false
             canvas.style.pointerEvents = pointerEventsEnabled ? 'auto' : 'none';
         }
         
         return () => {
-            // Réinitialiser à l'état par défaut lors du démontage
             if (canvas) {
                 canvas.style.pointerEvents = 'auto';
             }
         };
     }, [pointerEventsEnabled]);
 
-    // Effect to detect if everything is ready
     useEffect(() => {
-        // Consider everything ready if FBOs, materials, refs are defined
         const allReady =
             meshRef.current &&
             postRef.current &&
@@ -100,7 +92,6 @@ export const FluidMask = ({
         }
     }, [FBOs, materials, meshRef.current, postRef.current, isInitialized]);
 
-    // Effect to call onReady after the minimum delay
     useEffect(() => {
         let timeoutId: NodeJS.Timeout | null = null;
         if (isInitialized && !readyCalled) {
@@ -123,6 +114,26 @@ export const FluidMask = ({
         },
         [materials],
     );
+
+    useEffect(() => {
+        // Fonction pour empêcher le défilement par défaut
+        const preventDefault = (e: TouchEvent) => {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+        };
+    
+        // Appliquer uniquement si les événements de pointeur sont activés
+        if (pointerEventsEnabled) {
+            document.body.style.overflow = 'hidden';
+            document.addEventListener('touchmove', preventDefault, { passive: false });
+        }
+    
+        return () => {
+            document.body.style.overflow = '';
+            document.removeEventListener('touchmove', preventDefault);
+        };
+    }, [pointerEventsEnabled]);
 
     const setRenderTarget = useCallback(
         (name: keyof ReturnType<typeof useFBOs>) => {
@@ -225,7 +236,9 @@ export const FluidMask = ({
             {createPortal(
                 <mesh
                     ref={meshRef}
+                    onPointerDown={pointerEventsEnabled ? onPointerDown : undefined}
                     onPointerMove={pointerEventsEnabled ? onPointerMove : undefined}
+                    onPointerUp={pointerEventsEnabled ? onPointerUp : undefined}
                     scale={[size.width, size.height, 1]}>
                     <planeGeometry args={[2, 2, 10, 10]} />
                 </mesh>,

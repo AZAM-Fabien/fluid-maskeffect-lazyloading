@@ -16,8 +16,8 @@ export const usePointer = ({ force, enablePointerEvents = true }: { force: numbe
 
     const lastMouse = useRef<Vector2>(new Vector2());
     const hasMoved = useRef<boolean>(false);
+    const isTouching = useRef<boolean>(false);
 
-    // Fonction commune pour traiter le mouvement du pointeur
     const handlePointerMove = useCallback(
         (x: number, y: number) => {
             const deltaX = x - lastMouse.current.x;
@@ -41,7 +41,6 @@ export const usePointer = ({ force, enablePointerEvents = true }: { force: numbe
         [force, size.height, size.width, splatStack]
     );
 
-    // Pour les événements directs sur le mesh
     const onPointerMove = useCallback(
         (event: any) => {
             handlePointerMove(event.x, event.y);
@@ -49,7 +48,36 @@ export const usePointer = ({ force, enablePointerEvents = true }: { force: numbe
         [handlePointerMove]
     );
 
-    // Pour les événements globaux (quand le canvas est transparent aux clics)
+    const onTouchStart = useCallback(
+        (event: TouchEvent) => {
+            if (event.cancelable) event.preventDefault();
+            if (event.touches.length > 0) {
+                isTouching.current = true;
+                const touch = event.touches[0];
+                // Normalisation des coordonnées tactiles
+                handlePointerMove(touch.clientX, touch.clientY);
+            }
+        },
+        [handlePointerMove]
+    );
+
+    const onTouchMove = useCallback(
+        (event: TouchEvent) => {
+            if (event.cancelable) event.preventDefault();
+            if (event.touches.length > 0 && isTouching.current) {
+                const touch = event.touches[0];
+                // Normalisation des coordonnées tactiles
+                handlePointerMove(touch.clientX, touch.clientY);
+            }
+        },
+        [handlePointerMove]
+    );
+
+    const onTouchEnd = useCallback(() => {
+        isTouching.current = false;
+        hasMoved.current = false;
+    }, []);
+
     const handleGlobalPointerMove = useCallback(
         (event: PointerEvent) => {
             handlePointerMove(event.clientX, event.clientY);
@@ -57,16 +85,48 @@ export const usePointer = ({ force, enablePointerEvents = true }: { force: numbe
         [handlePointerMove]
     );
 
-    // Si enablePointerEvents est false, on utilise des événements globaux
     useEffect(() => {
         if (!enablePointerEvents) {
             window.addEventListener('pointermove', handleGlobalPointerMove);
+            window.addEventListener('touchstart', onTouchStart as any);
+            window.addEventListener('touchmove', onTouchMove as any);
+            window.addEventListener('touchend', onTouchEnd);
             
             return () => {
                 window.removeEventListener('pointermove', handleGlobalPointerMove);
+                window.removeEventListener('touchstart', onTouchStart as any);
+                window.removeEventListener('touchmove', onTouchMove as any);
+                window.removeEventListener('touchend', onTouchEnd);
             };
         }
-    }, [handleGlobalPointerMove, enablePointerEvents]);
+    }, [handleGlobalPointerMove, onTouchStart, onTouchMove, onTouchEnd, enablePointerEvents]);
 
-    return { onPointerMove, splatStack };
+
+    const onPointerDown = useCallback(
+        (event: any) => {
+            if (event.pointerType === 'touch') {
+                if (event.cancelable) event.preventDefault();
+                isTouching.current = true;
+            }
+            handlePointerMove(event.x, event.y);
+        },
+        [handlePointerMove]
+    );
+
+    const onPointerUp = useCallback(
+        (event: any) => {
+            if (event.pointerType === 'touch') {
+                isTouching.current = false;
+                hasMoved.current = false;
+            }
+        },
+        []
+    );
+
+    return { 
+        onPointerDown, 
+        onPointerMove, 
+        onPointerUp,
+        splatStack 
+    };
 };

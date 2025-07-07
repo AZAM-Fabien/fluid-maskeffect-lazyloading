@@ -3,7 +3,7 @@
     "description": "A react-three-fiber component for fluid distortion effects and fluid mask effect",
     "author": "azam-fabien",
     "private": false,
-    "version": "1.0.0",
+    "version": "1.1.1",
     "type": "module",
     "main": "dist/index.umd.js",
     "module": "dist/index.es.js",

@@ -50,7 +50,7 @@ export const usePointer = ({ force, enablePointerEvents = true }: { force: numbe
 
     const onTouchStart = useCallback(
         (event: TouchEvent) => {
-            if (event.cancelable) event.preventDefault();
+            if (event.cancelable && typeof event.preventDefault === 'function') event.preventDefault();
             if (event.touches.length > 0) {
                 isTouching.current = true;
                 const touch = event.touches[0];
@@ -63,7 +63,7 @@ export const usePointer = ({ force, enablePointerEvents = true }: { force: numbe
 
     const onTouchMove = useCallback(
         (event: TouchEvent) => {
-            if (event.cancelable) event.preventDefault();
+            if (event.cancelable && typeof event.preventDefault === 'function') event.preventDefault();
             if (event.touches.length > 0 && isTouching.current) {
                 const touch = event.touches[0];
                 // Normalisation des coordonnées tactiles
@@ -105,7 +105,7 @@ export const usePointer = ({ force, enablePointerEvents = true }: { force: numbe
     const onPointerDown = useCallback(
         (event: any) => {
             if (event.pointerType === 'touch') {
-                if (event.cancelable) event.preventDefault();
+                if (event.cancelable && typeof event.preventDefault === 'function') event.preventDefault();
                 isTouching.current = true;
             }
             handlePointerMove(event.x, event.y);
